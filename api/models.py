@@ -24,7 +24,7 @@ class Book(models.Model):
     sub_category = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True)
     year_published = models.DateField()
     date_uploaded = models.DateTimeField(auto_now_add=True,)
-    file = models.FileField()
+    # file = models.FileField()
     
     def __str__(self):
         return self.name
