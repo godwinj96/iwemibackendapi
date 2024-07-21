@@ -3,8 +3,8 @@ from unicodedata import category
 from django.forms import NullBooleanField
 from django.db.models import Q
 from django.shortcuts import render, redirect
-from .models import Book, Category, SubCategory
-from .serializers import BookSerializer, CategorySerializer, SubCategorySerializer
+from .models import Book, Category, SubCategory, Discipline
+from .serializers import BookSerializer, CategorySerializer, SubCategorySerializer, DisciplineSerializer
 from rest_framework import generics
 # from .forms import LoginForm
 
@@ -13,14 +13,9 @@ from rest_framework import generics
 class BookList(generics.ListCreateAPIView):
     serializer_class = BookSerializer
 
-    def get_queryset(self):
-        queryset = Book.objects.all()
-        query =self.request.query_params.get('q')
-        if query is not None:
-            queryset = queryset.filter(
-                name__icontains=query
-            )
-            return queryset
+    
+    queryset = Book.objects.all()
+        
         
 
 class BookDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -31,14 +26,8 @@ class BookDetail(generics.RetrieveUpdateDestroyAPIView):
 class CategoryList(generics.ListCreateAPIView):
     serializer_class = CategorySerializer
     
-    def get_queryset(self):
-        queryset = Category.objects.all()
-        query =self.request.query_params.get('q')
-        if query is not None:
-            queryset = queryset.filter(
-                name=query
-            )
-            return queryset
+    queryset = Category.objects.all()
+        
 
 
 class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -57,6 +46,16 @@ class SubCategoryList(generics.ListCreateAPIView):
 class SubCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SubCategorySerializer
     queryset = SubCategory.objects.all()
+
+
+class DisciplineList(generics.ListCreateAPIView):
+    serializer_class = DisciplineSerializer
+    queryset = Discipline.objects.all()
+
+
+class DisciplineDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = DisciplineSerializer
+    queryset = Discipline.objects.all()
 
 # books = [
 #     {'id':1, 'name':'Half Of A Yellow Sun', 'author':'Chimamanda Ngozi Adichie'},
